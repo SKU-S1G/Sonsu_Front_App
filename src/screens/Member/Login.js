@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
+import { API_URL } from "../../../confing";
 
 const Login = () => {
   const navigation = useNavigation();
@@ -19,7 +20,7 @@ const Login = () => {
   const handleLogin = () => {
     axios
       .post(
-        "http://192.0.0.2:5002/login",
+        `${API_URL}login`,
 
         {
           loginId: id,
