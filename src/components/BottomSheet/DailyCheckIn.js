@@ -40,7 +40,10 @@ const DailyCheckIn = () => {
     <View style={styles.container}>
       <View style={styles.titleWrap}>
         <Text style={styles.title}>오늘의 출석</Text>
-        <ShortcutButton style={styles.ShortcutButton} />
+        <ShortcutButton
+          style={styles.ShortcutButton}
+          destination="AttendanceCheck"
+        />
       </View>
       <View style={styles.CalendarContainer}>
         {week.map(({ date, day, fullDate }, index) => (
