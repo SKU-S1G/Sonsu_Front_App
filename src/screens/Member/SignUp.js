@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
+import { API_URL } from "../../../confing";
 
 const SignUp = () => {
   const navigation = useNavigation();
@@ -67,16 +68,13 @@ const SignUp = () => {
       setErrors(newErrors);
     } else {
       try {
-        const response = await axios.post(
-          "http://192.168.45.121:5002/register",
-          {
-            username: name,
-            loginId: id,
-            password: password,
-            confirmPassword: confirmPassword,
-            email: email,
-          }
-        );
+        const response = await axios.post(`${API_URL}/register`, {
+          username: name,
+          loginId: id,
+          password: password,
+          confirmPassword: confirmPassword,
+          email: email,
+        });
         console.log(response.data);
         navigation.navigate("Login");
       } catch (error) {

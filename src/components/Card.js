@@ -1,16 +1,16 @@
-import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import tailwind from 'tailwind-rn';
+import React from "react";
+import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import tailwind from "tailwind-rn";
 
 export default function Card({ lesson, currentProgress, onPress }) {
   const lessonLocked = lesson.id > currentProgress.lessonId;
 
   return (
     <View>
-      <View 
-        style={styles.contentContainer} 
-        onPress={onPress} 
+      <View
+        style={styles.contentContainer}
+        onPress={onPress}
         disabled={lessonLocked}
       >
         <View style={styles.card}>
@@ -25,19 +25,23 @@ export default function Card({ lesson, currentProgress, onPress }) {
         </View>
 
         <View style={styles.textContainer}>
-          <Text 
-            style={styles.title}
-            numberOfLines={1} 
-            ellipsizeMode="tail"
-          >
+          <Text style={styles.title} numberOfLines={1} ellipsizeMode="tail">
             Part {lesson.id}. {lesson.title}
           </Text>
         </View>
       </View>
-      <View style={[tailwind('items-center text-center'), { backgroundColor: '#FFE694', paddingHorizontal: 6, paddingVertical: 5, borderRadius: 15 }]}>
-        <Text>
-          다시 학습하기
-        </Text>
+      <View
+        style={[
+          tailwind("items-center text-center"),
+          {
+            backgroundColor: "#FFE694",
+            paddingHorizontal: 6,
+            paddingVertical: 5,
+            borderRadius: 15,
+          },
+        ]}
+      >
+        <Text>다시 학습하기</Text>
       </View>
     </View>
   );
@@ -45,40 +49,40 @@ export default function Card({ lesson, currentProgress, onPress }) {
 
 const styles = StyleSheet.create({
   contentContainer: {
-    flexDirection: 'column',
+    flexDirection: "column",
   },
   card: {
-    minHeight: 'fit-content',
+    minHeight: "fit-content",
     paddingVertical: 14,
-    paddingHorizontal: 10,
     marginBottom: 5,
     borderRadius: 10,
-    backgroundColor: '#f9f9f9',
+    backgroundColor: "#f9f9f9",
+    alignItems: "center",
+    justifyContent: "center",
   },
   lockOverlay: {
-    position: 'absolute',
+    position: "absolute",
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.4)',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "rgba(0, 0, 0, 0.4)",
+    justifyContent: "center",
+    alignItems: "center",
     borderRadius: 10,
     zIndex: 1,
   },
   imageContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    // width: 80,
   },
   image: {
-    width: 115,
-    height: 115,
-    resizeMode: 'contain',
+    width: 90,
+    height: 90,
+    resizeMode: "contain",
   },
   textContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     marginLeft: 10,
     marginBottom: 8,
     paddingVertical: 5,
@@ -86,8 +90,8 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 13,
-    fontWeight: 'bold',
-    textAlign: 'center',
+    fontWeight: "bold",
+    textAlign: "center",
     flexShrink: 1,
   },
 });

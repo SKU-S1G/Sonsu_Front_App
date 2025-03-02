@@ -3,6 +3,7 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import BottomSheet from "../components/BottomSheet/BottomSheet";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
+import { API_URL } from "../../confing";
 
 const Main = () => {
   const navigation = useNavigation();
@@ -11,7 +12,7 @@ const Main = () => {
   useEffect(() => {
     try {
       axios
-        .get("http://192.168.45.121:5002/login/success", {
+        .get(`${API_URL}login/success`, {
           withCredentials: true,
         })
         .then((response) => {
@@ -43,7 +44,6 @@ const Main = () => {
         </TouchableOpacity>
       </View>
 
-      {/* BottomSheet 컴포넌트 호출 */}
       <BottomSheet />
     </View>
   );

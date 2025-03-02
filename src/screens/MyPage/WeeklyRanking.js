@@ -1,4 +1,7 @@
 import { Image, Text, View, StyleSheet, TouchableOpacity } from "react-native";
+import Feather from "@expo/vector-icons/Feather";
+import { useState } from "react";
+import InfoModal from "../../components/InfoModal";
 
 const userRank = [
   { rank: 1, name: "김정이", nickname: "교수님", progress: 90 },
@@ -9,9 +12,22 @@ const userRank = [
 ];
 
 const WeeklyRanking = () => {
+  const [modalVisible, setModalVisible] = useState(false);
+
   return (
     <View style={styles.rankContainer}>
-      <Text style={styles.title}>주간 랭킹</Text>
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          marginTop: "20",
+        }}
+      >
+        <Text style={styles.title}>주간 랭킹</Text>
+        <TouchableOpacity onPress={() => setModalVisible(true)}>
+          <Feather name="alert-circle" size={20} color="#666666" />
+        </TouchableOpacity>
+      </View>
       {userRank.map((user, index) => (
         <View key={index} style={styles.rankWrap}>
           <View
@@ -50,6 +66,14 @@ const WeeklyRanking = () => {
           </View>
         </View>
       ))}
+      <InfoModal
+        visible={modalVisible}
+        onClose={() => setModalVisible(false)}
+        title="주간랭킹"
+        content={
+          "사용자의 학습 점수를 통해 랭킹을 결정합니다.\n점수를 높여 더 좋은 랭킹을 달성하세요!"
+        }
+      />
     </View>
   );
 };
@@ -61,7 +85,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     fontWeight: "700",
-    marginTop: "20",
+    // marginTop: "20",
     marginBottom: "10",
     marginLeft: "-5",
   },

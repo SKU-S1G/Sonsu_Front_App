@@ -1,6 +1,5 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
-
 import {
   View,
   Text,
@@ -11,6 +10,7 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
+import { API_URL } from "../../../confing";
 
 const Login = () => {
   const navigation = useNavigation();
@@ -20,7 +20,8 @@ const Login = () => {
   const handleLogin = () => {
     axios
       .post(
-        "http://192.168.45.121:5002/login",
+        `${API_URL}login`,
+
         {
           loginId: id,
           password: password,

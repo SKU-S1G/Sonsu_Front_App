@@ -1,7 +1,7 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { GestureHandlerRootView } from "react-native-gesture-handler"; // ✅ 추가
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import Main from "./src/screens/Main";
 import Login from "./src/screens/Member/Login";
 import SignUp from "./src/screens/Member/SignUp";
