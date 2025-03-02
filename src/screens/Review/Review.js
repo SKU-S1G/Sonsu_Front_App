@@ -28,13 +28,14 @@ export default function Review() {
       </View>
 
       {/* 스피드 게임 */}
-      <View
+      <TouchableOpacity
         style={[
           tailwind(
             "flex-row justify-between items-center bg-red-300 mt-5 mb-5"
           ),
           styles.gameBox,
         ]}
+        onPress={() => navigation.navigate("SpeedInfo")}
       >
         <View style={styles.imageContainer}>
           <Image
@@ -54,7 +55,7 @@ export default function Review() {
             실시간 게임으로 빠르게 수어 복습!
           </Text>
         </View>
-      </View>
+      </TouchableOpacity>
 
       {/* OX 퀴즈 */}
       <View
