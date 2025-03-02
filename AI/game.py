@@ -21,8 +21,6 @@ CORS(app, resources={
 # 설정
 actions = ['ㄱ', 'ㄴ', 'ㄷ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅅ', 'ㅇ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ']
 seq_length = 10
-fontpath = '/Users/cuj/Library/Fonts/Pretendard-Bold.otf'
-font = ImageFont.truetype(fontpath, 40)
 
 # 모델 및 MediaPipe 초기화
 detector = hm.HolisticDetector(min_detection_confidence=0.3)
