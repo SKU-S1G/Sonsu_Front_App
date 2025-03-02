@@ -10,12 +10,12 @@ export default function StudyOnly() {
   const { topic, lesson } = route.params;
   const navigation = useNavigation();
 
-  // const serverIP = "http://192.168.45.121:5001";
-  const serverIP = "http://192.168.10.20:5001";
+  // const serverIP = "http://192.168.45.144:5001";
+  // const serverIP = "http://192.168.10.20:5001";
+  const serverIP = "http://192.0.0.2:5001";
 
   return (
     <SafeAreaView style={styles.container}>
-      <SpeedBack />
 
       <TouchableOpacity
         style={styles.backButton}
@@ -26,10 +26,9 @@ export default function StudyOnly() {
             source={require("../../../assets/images/SonsuLogo.png")}
             style={{ width: 30, height: 30 }}
           />
-          <Text style={styles.title}>
-            {"Step "}
-            {lesson.id}. {topic}
-          </Text>
+          <View style={styles.screenContainer}>
+            <Text style={styles.title}>{`Step ${lesson.id}. ${topic}`}</Text>
+          </View>
         </View>
       </TouchableOpacity>
 

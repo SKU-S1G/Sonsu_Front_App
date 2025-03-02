@@ -16,21 +16,17 @@ export default function Study() {
   const { topic, lesson } = route.params;
   const navigation = useNavigation();
 
-  // const serverIP = "http://192.168.45.121:5001";
-  const serverIP = "http://192.168.10.20:5001";
+  // const serverIP = "http://192.168.45.144:5001";
+  // const serverIP = "http://192.168.10.20:5001";
+  const serverIP = "http://192.0.0.2:5001";
 
   return (
     <SafeAreaView style={styles.container}>
       <SpeedBack heightMultiplier={1.88} />
-      <TouchableOpacity
-        style={styles.backButton}
-        onPress={() => navigation.goBack()}
-      >
+
+      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
         <View style={styles.screenContainer}>
-          <Text style={styles.title}>
-            {"Step "}
-            {lesson.id}. {topic}
-          </Text>
+          <Text style={styles.title}>{`Step ${lesson.id}. ${topic}`}</Text>
         </View>
       </TouchableOpacity>
 
@@ -48,33 +44,21 @@ export default function Study() {
         </Text>
       </View>
 
-      {/* 카메라 비디오 스트리밍 WebView or iframe */}
       <View style={styles.cameraFeedWrapper}>
-        {Platform.OS === "web" ? (
-          <iframe
-            src={`${serverIP}/video_feed`}
-            style={styles.cameraFeed}
-            width="100%"
-            height="100%"
-            allowFullScreen
-          />
-        ) : (
-          <WebView
-            source={{ uri: `${serverIP}/video_feed` }}
-            style={styles.cameraFeed}
-            javaScriptEnabled={true}
-            domStorageEnabled={true}
-            originWhitelist={["*"]}
-            allowsFullscreenVideo={true}
-            allowsInlineMediaPlayback={true} // 추가된 속성
-            mediaPlaybackRequiresUserAction={false} // 추가된 속성
-            onError={(error) => console.log("WebView error:", error)}
-            onHttpError={(syntheticEvent) => {
-              const { nativeEvent } = syntheticEvent;
-              console.log("HTTP error: ", nativeEvent);
-            }}
-          />
-        )}
+        <WebView
+          source={{ uri: `${serverIP}/video_feed` }}
+          style={styles.cameraFeed}
+          javaScriptEnabled={true}
+          domStorageEnabled={true}
+          allowsFullscreenVideo={true}
+          allowsInlineMediaPlayback={true}
+          mediaPlaybackRequiresUserAction={false}
+          onError={(error) => console.log("WebView error:", error)}
+          onHttpError={(syntheticEvent) => {
+            const { nativeEvent } = syntheticEvent;
+            console.log("HTTP error: ", nativeEvent);
+          }}
+        />
       </View>
 
       {/* 혼자 해보기 버튼 */}
@@ -82,7 +66,7 @@ export default function Study() {
         style={styles.practiceButton}
         onPress={() => navigation.navigate("StudyOnly", { topic, lesson })}
       >
-        <Text style={styles.practiceButtonText}>혼자 해보기{"  ->"}</Text>
+        <Text style={styles.practiceButtonText}>혼자 해보기 →</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );
@@ -93,9 +77,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#f5f5f5",
     alignItems: "center",
-  },
-  screenContainer: {
-    flex: 1,
   },
   title: {
     fontSize: 22,
