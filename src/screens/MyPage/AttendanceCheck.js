@@ -69,7 +69,8 @@ const AttendanceCheck = () => {
     return (
       today.getDate() === day.date &&
       today.getMonth() === currentDate.getMonth() &&
-      today.getFullYear() === currentDate.getFullYear()
+      today.getFullYear() === currentDate.getFullYear() &&
+      day.isCurrentMonth
     );
   };
 
