@@ -10,6 +10,7 @@ import { useRoute, useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import SpeedBack from "../../components/SpeedBack";
 import { WebView } from "react-native-webview";
+import { serverIP } from "../../../confing";
 
 export default function Study() {
   const route = useRoute();
@@ -18,13 +19,17 @@ export default function Study() {
 
   // const serverIP = "http://192.168.45.144:5001";
   // const serverIP = "http://192.168.10.20:5001";
-  const serverIP = "http://192.0.0.2:5001";
+  // const serverIP = "http://192.0.0.2:5001";
+  // const serverIP = "http://192.168.1.123:5001";
 
   return (
     <SafeAreaView style={styles.container}>
       <SpeedBack heightMultiplier={1.88} />
 
-      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+      <TouchableOpacity
+        style={styles.backButton}
+        onPress={() => navigation.goBack()}
+      >
         <View style={styles.screenContainer}>
           <Text style={styles.title}>{`Step ${lesson.id}. ${topic}`}</Text>
         </View>

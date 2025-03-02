@@ -1,9 +1,10 @@
-import React from 'react';
-import { useRoute, useNavigation } from '@react-navigation/native';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import SpeedBack from '../../components/SpeedBack';
-import { WebView } from 'react-native-webview'; // WebView import 추가
+import React from "react";
+import { useRoute, useNavigation } from "@react-navigation/native";
+import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import SpeedBack from "../../components/SpeedBack";
+import { WebView } from "react-native-webview"; // WebView import 추가
+import { serverIP } from "../../../confing";
 
 export default function StudyOnly() {
   const route = useRoute();
@@ -12,11 +13,11 @@ export default function StudyOnly() {
 
   // const serverIP = "http://192.168.45.144:5001";
   // const serverIP = "http://192.168.10.20:5001";
-  const serverIP = "http://192.0.0.2:5001";
+  // const serverIP = "http://192.0.0.2:5001";
+  // const serverIP = "http://192.168.1.123:5001";
 
   return (
     <SafeAreaView style={styles.container}>
-
       <TouchableOpacity
         style={styles.backButton}
         onPress={() => navigation.goBack()}
@@ -56,23 +57,17 @@ export default function StudyOnly() {
       </View>
 
       <View style={{ marginTop: 30 }}>
-        <Text style={{ fontSize: 15,  }}>
-          혼자서 학습해보세요!
-        </Text>
+        <Text style={{ fontSize: 15 }}>혼자서 학습해보세요!</Text>
       </View>
 
       <View style={{ marginTop: 40 }}>
-        <Text style={{ fontSize: 25, fontWeight: 'bold' }}>
-          '안녕하세요'
-        </Text>
+        <Text style={{ fontSize: 25, fontWeight: "bold" }}>'안녕하세요'</Text>
       </View>
 
       <View style={{ marginTop: 40 }}>
-        <Text style={{ fontSize: 25, color: 'red' }}>
-          정확도 80%
-        </Text>
+        <Text style={{ fontSize: 25, color: "red" }}>정확도 80%</Text>
       </View>
-    </SafeAreaView> 
+    </SafeAreaView>
   );
 }
 
@@ -84,8 +79,8 @@ const styles = StyleSheet.create({
   },
   screenContainer: {
     flex: 1,
-    flexDirection: 'row',
-    alignSelf: 'center',
+    flexDirection: "row",
+    alignSelf: "center",
     marginLeft: 10,
   },
   title: {
@@ -103,7 +98,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   cameraFeedWrapper: {
-    width: '100%',
+    width: "100%",
     height: 430,
     borderRadius: 12,
     overflow: "hidden",
