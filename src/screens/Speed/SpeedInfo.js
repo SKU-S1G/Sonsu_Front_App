@@ -17,10 +17,10 @@ export default function SpeedInfo() {
 
   return (
     <View>
-      <SpeedBack heightMultiplier={1.88} />
+      <SpeedBack heightMultiplier={1.87} />
       <Header color="#FFFFFF" />
 
-      <View style={{ width: "80%", justifyContent: 'center' }}>
+      <View style={styles.container}>
         <View style={styles.speedTextContainer}>
           <MaskedView
             style={styles.maskedView}
@@ -64,13 +64,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#f5f5f5',
   },
   speedTextContainer: {
-    width: '100%',
     marginTop: 10,
   },
   maskedView: {
-    width: '100%',
     height: 40,
-    alignItems: 'flex-start'
   },
   gradient: {
     width: '100%',
