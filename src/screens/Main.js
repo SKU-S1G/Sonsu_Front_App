@@ -3,7 +3,7 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import BottomSheet from "../components/BottomSheet/BottomSheet";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
-import { API_URL } from "../../confing";
+import { API_URL } from "../../config";
 
 const Main = () => {
   const navigation = useNavigation();
@@ -12,7 +12,7 @@ const Main = () => {
   useEffect(() => {
     try {
       axios
-        .get(`${API_URL}login/success`, {
+        .get(`${API_URL}/login/success`, {
           withCredentials: true,
         })
         .then((response) => {
@@ -30,7 +30,7 @@ const Main = () => {
     <View style={styles.container}>
       <View style={styles.Model}>
         <Text style={styles.textYellow}>
-          안녕하세요, {userInfo.username ? userInfo.username : "undefined"}님!
+          안녕하세요, {userInfo?.username ? userInfo?.username : "undefined"}님!
         </Text>
         <Image
           source={require("../../assets/images/sonsuModel.png")}

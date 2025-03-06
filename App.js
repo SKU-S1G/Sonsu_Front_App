@@ -17,6 +17,7 @@ import SignReview from "./src/screens/MyPage/SignReview";
 import WeeklyReport from "./src/screens/MyPage/WeeklyReport";
 import StudyOnly from "./src/screens/Study/StudyOnly";
 import SpeedInfo from "./src/screens/Speed/SpeedInfo";
+import SpeedGame from "./src/screens/Speed/SpeedGame";
 
 const Stack = createStackNavigator();
 
@@ -25,6 +26,7 @@ export default function App() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="SpeedInfo" component={SpeedInfo} />
           <Stack.Screen name="Main" component={Menu} />
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="AppPermissions" component={AppPermissions} />
@@ -38,7 +40,8 @@ export default function App() {
           <Stack.Screen name="SignReview" component={SignReview} />
           <Stack.Screen name="WeeklyReport" component={WeeklyReport} />
           <Stack.Screen name="StudyOnly" component={StudyOnly} />
-          <Stack.Screen name="SpeedInfo" component={SpeedInfo} />
+          <Stack.Screen name="SpeedGame" component={SpeedGame} />
+          {/* <Stack.Screen name="SpeedInfo" component={SpeedInfo} /> */}
         </Stack.Navigator>
       </NavigationContainer>
     </GestureHandlerRootView>

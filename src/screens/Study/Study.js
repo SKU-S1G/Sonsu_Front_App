@@ -10,7 +10,7 @@ import { useRoute, useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import SpeedBack from "../../components/SpeedBack";
 import { WebView } from "react-native-webview";
-import { serverIP } from "../../../confing";
+import { serverIP } from "../../../config";
 
 export default function Study() {
   const route = useRoute();

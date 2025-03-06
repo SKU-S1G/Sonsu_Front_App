@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
-import { API_URL } from "../../../confing";
+import { API_URL } from "../../../config";
 
 const SignUp = () => {
   const navigation = useNavigation();

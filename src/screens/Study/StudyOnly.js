@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import SpeedBack from "../../components/SpeedBack";
 import { WebView } from "react-native-webview"; // WebView import 추가
-import { serverIP } from "../../../confing";
+import { serverIP } from "../../../config";
 
 export default function StudyOnly() {
   const route = useRoute();

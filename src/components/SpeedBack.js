@@ -3,7 +3,6 @@ import { View, StyleSheet, Dimensions } from "react-native";
 const { width } = Dimensions.get("window");
 
 const SpeedBack = ({ heightMultiplier = 1 }) => { // 기본값 1 추가
-  console.log("Rendering SpeedBack with heightMultiplier:", heightMultiplier);
 
   const height = Math.min(width * heightMultiplier, 720); // 최대 높이 제한
 
