@@ -98,12 +98,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   cameraFeedWrapper: {
+    alignSelf: 'center',
     width: "100%",
-    height: 430,
+    height: 450,
     borderRadius: 12,
     overflow: "hidden",
-    marginTop: 20,
-    aspectRatio: 16 / 9,
+    marginTop: 50,
+    aspectRatio: 12 / 16,
   },
   cameraFeed: {
     flex: 1,

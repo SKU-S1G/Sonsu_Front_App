@@ -39,7 +39,10 @@ export default function Review() {
       </TouchableOpacity>
 
       {/* OX 퀴즈 */}
-      <View style={[tailwind("flex-row justify-between items-center bg-blue-200 mb-5"), styles.gameBox, styles.shadowReverse,]}>
+      <TouchableOpacity 
+        style={[tailwind("flex-row justify-between items-center bg-blue-200 mb-5"), styles.gameBox, styles.shadowReverse,]}
+        onPress={() => navigation.navigate("OXInfo")}
+        >
         <View style={styles.textContainer}>
           <Image source={require("../../../assets/images/OXQuiz.png")} style={styles.imageTitle}/>
           
@@ -51,7 +54,7 @@ export default function Review() {
         <View style={styles.imageContainer}>
           <Image source={require("../../../assets/images/sonsuModel.png")} style={styles.imageSmall}/>
         </View>
-      </View>
+      </TouchableOpacity>
 
       {/* 오답 수어 다시보기 */}
       <View style={tailwind("flex-row justify-between items-center mt-2 mb-2 mx-10")}>
