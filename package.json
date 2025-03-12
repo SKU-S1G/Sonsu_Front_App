@@ -22,6 +22,7 @@
     "cookieparser": "^0.1.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
+    "expo-av": "^15.0.2",
     "expo-camera": "^16.0.17",
     "expo-checkbox": "~4.0.1",
     "expo-font": "^13.0.3",
@@ -52,12 +53,13 @@
     "react-native-svg": "15.8.0",
     "react-native-text-gradient": "^0.1.7",
     "react-native-vector-icons": "^10.2.0",
-    "react-native-video": "^6.10.1",
+    "react-native-video": "^6.10.2",
     "react-native-vision-camera": "^4.6.4",
     "react-native-web": "~0.19.13",
     "react-native-webview": "^13.12.5",
     "tailwind-rn": "^2.0.0",
-    "victory-native": "^41.16.1"
+    "victory-native": "^41.16.1",
+    "expo-video": "~2.0.5"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

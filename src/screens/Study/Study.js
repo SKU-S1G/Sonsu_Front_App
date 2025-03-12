@@ -11,6 +11,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import SpeedBack from "../../components/SpeedBack";
 import { WebView } from "react-native-webview";
 import { serverIP } from "../../../config";
+import { Video } from "expo-av";
 
 export default function Study() {
   const route = useRoute();
@@ -35,9 +36,17 @@ export default function Study() {
         </View>
       </TouchableOpacity>
 
-      <Image
+      {/* <Image
         source={require("../../../assets/images/sonsuModel.png")}
         style={styles.image}
+      /> */}
+
+      <Video
+        source={require("../../../assets/videos/hi.mp4")}
+        resizeMode="contain"
+        useNativeControls
+        isLooping
+        style={styles.video}
       />
 
       <View style={styles.desContainer}>
@@ -95,9 +104,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  image: {
-    width: "40%",
-    height: "35%",
+  video: {
+    width: "80%",
+    height: "23%",
     marginTop: 20,
   },
   desContainer: {
