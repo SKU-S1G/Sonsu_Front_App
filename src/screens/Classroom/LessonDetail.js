@@ -117,9 +117,19 @@ export default function LessonDetail() {
 
       <View style={styles.NowContainer}>
         <TouchableOpacity
-          // key={lesson.id}
-          style={styles.contentContainer_}
-          // disabled={lesson.id > currentProgress.lessonId}
+          style={[
+            styles.contentContainer_,
+            {
+              backgroundColor:
+                selectedLevel === "초급"
+                  ? "#C7DACD"
+                  : selectedLevel === "중급"
+                  ? "#CBD3DF"
+                  : selectedLevel === "고급"
+                  ? "#E9D0CC"
+                  : "#fff", // 기본값 (혹은 기본 색상을 원하면 변경)
+            },
+          ]}
         >
           <View style={styles.card_}>
             <View style={styles.imageContainer_}>
@@ -233,6 +243,10 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     borderRadius: 10,
     justifyContent: "space-between",
+    paddingBottom: 35,
+    borderBottomColor: "#757575",
+    borderBottomWidth: 0.3,
+    borderRadius: 20,
   },
   card: {
     minHeight: "fit-content",
