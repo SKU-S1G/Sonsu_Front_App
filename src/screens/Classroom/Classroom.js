@@ -18,8 +18,8 @@ export default function Classroom() {
   const [selectedLevel, setSelectedLevel] = useState("초급");
 
   const [progress, setProgress] = useState({
-    초급: { lessonId: 3, lastCompletedTopic: "감사합니다" },
-    중급: { lessonId: 0, lastCompletedTopic: null },
+    초급: { lessonId: 8, lastCompletedTopic: "춥다" },
+    중급: { lessonId: 2, lastCompletedTopic: "엄마 배고파요 밥 주세요" },
     고급: { lessonId: 0, lastCompletedTopic: null },
   });
 
@@ -140,6 +140,7 @@ export default function Classroom() {
                 title: lesson.title,
                 progress: currentProgress,
                 selectedLevel: selectedLevel, // 선택한 레벨도 함께 넘겨줍니다.
+                currentProgress: currentProgress,
               })
             }
             disabled={lesson.id > currentProgress.lessonId}
@@ -168,7 +169,7 @@ export default function Classroom() {
             <Feather
               name="check-circle"
               size={27}
-              color={lesson.id > currentProgress.lessonId ? "gray" : "green"}
+              color={lesson.id > currentProgress.lessonId ? "gray" : levelColors[selectedLevel]}
               style={styles.check}
             />
           </TouchableOpacity>
