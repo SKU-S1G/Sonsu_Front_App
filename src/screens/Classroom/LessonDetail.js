@@ -1,19 +1,33 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, Image, ScrollView, TouchableOpacity } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { useNavigation, useRoute } from '@react-navigation/native';
-import Header from '../../components/Header';
+import React, { useState, useEffect } from "react";
+import {
+  StyleSheet,
+  View,
+  Text,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import Header from "../../components/Header";
+import Feather from "@expo/vector-icons/Feather";
+import StudyBack from "../../components/StudyBack";
 
 export default function LessonDetail() {
   const navigation = useNavigation();
   const route = useRoute();
-  const { lesson, title, progress, selectedLevel: initialSelectedLevel } = route.params;
+  const {
+    lesson,
+    title,
+    progress,
+    selectedLevel: initialSelectedLevel,
+  } = route.params;
 
   const levelColors = {
-    '초급': '#39B360',
-    '중급': '#487BCD',
-    '고급': '#FF9381'
+    초급: "#39B360",
+    중급: "#487BCD",
+    고급: "#FF9381",
   };
 
   const [selectedLevel, setSelectedLevel] = useState(initialSelectedLevel); // 파람으로 받은 selectedLevel을 초기값으로 설정
@@ -29,7 +43,9 @@ export default function LessonDetail() {
     if (lesson.id < progress.lessonId) {
       return false;
     } else if (lesson.id === progress.lessonId) {
-      const lastCompletedTopicIndex = lesson.topics.findIndex(t => t === progress.lastCompletedTopic);
+      const lastCompletedTopicIndex = lesson.topics.findIndex(
+        (t) => t === progress.lastCompletedTopic
+      );
       return index > lastCompletedTopicIndex;
     }
     return true;
@@ -37,45 +53,49 @@ export default function LessonDetail() {
 
   const renderCategoryButtons = () => (
     <View style={styles.categoryContainer}>
-      {['초급', '중급', '고급'].map((level) => (
-        selectedLevel === level && (
-          <TouchableOpacity
-            key={level}
-            style={[
-              styles.categoryButton,
-              selectedLevel === level && styles.selectedCategory, // 활성화된 카테고리 스타일
-            ]}
-            onPress={() => setSelectedLevel(level)}
-          >
-            <View style={styles.textWrapper}>
-              <Text
-                style={[
-                  styles.categoryText,
-                  selectedLevel === level && styles.selectedCategoryText, // 활성화된 카테고리 텍스트 스타일
-                ]}
-              >
-                {level}
-              </Text>
-            </View>
-            {selectedLevel === level && (
-              <View 
-                style={[
-                  styles.indicator,
-                  { backgroundColor: levelColors[level] } // 카테고리별 색상
-                ]} 
-              />
-            )}
-          </TouchableOpacity>
-        )
-      ))}
+      {["초급", "중급", "고급"].map(
+        (level) =>
+          selectedLevel === level && (
+            <TouchableOpacity
+              key={level}
+              style={[
+                styles.categoryButton,
+                selectedLevel === level && styles.selectedCategory, // 활성화된 카테고리 스타일
+              ]}
+              onPress={() => setSelectedLevel(level)}
+            >
+              <View style={styles.textWrapper}>
+                <Text
+                  style={[
+                    styles.categoryText,
+                    selectedLevel === level && styles.selectedCategoryText, // 활성화된 카테고리 텍스트 스타일
+                  ]}
+                >
+                  {level}
+                </Text>
+              </View>
+              {selectedLevel === level && (
+                <View
+                  style={[
+                    styles.indicator,
+                    { backgroundColor: levelColors[level] }, // 카테고리별 색상
+                  ]}
+                />
+              )}
+            </TouchableOpacity>
+          )
+      )}
     </View>
   );
 
   return (
     <View style={styles.container}>
-      <Header color="#fff"/>
+      <StudyBack />
+      <Header color="#fff" />
       <View style={styles.backButton}>
-        <Text style={styles.Title}>{"Part"} {lesson.id}. {lesson.title}</Text>
+        <Text style={styles.Title}>
+          {"Part"} {lesson.id}. {lesson.title}
+        </Text>
       </View>
 
       {renderCategoryButtons()}
@@ -83,42 +103,80 @@ export default function LessonDetail() {
       <View style={styles.titleTextWrapper}>
         <Text style={styles.titleText}>학습진도</Text>
         <Text style={[styles.titleText, { marginLeft: 12 }]}>
-          <Text style={[styles.titleText, { color: '#39B360', fontWeight: 'bold' }]}>
-            {lesson.id <= progress.lessonId ? 
-              lesson.topics.filter((_, index) => !isTopicLocked(_, index)).length : 0}
-          </Text>
-          {' '} / {lesson.topics.length} 강의
+          <Text
+            style={[styles.titleText, { color: "#39B360", fontWeight: "bold" }]}
+          >
+            {lesson.id <= progress.lessonId
+              ? lesson.topics.filter((_, index) => !isTopicLocked(_, index))
+                  .length
+              : 0}
+          </Text>{" "}
+          / {lesson.topics.length} 강의
         </Text>
       </View>
 
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <View style={styles.rowContainer}>
-          {lesson.topics.map((topic, index) => (
-            <TouchableOpacity 
-              key={index} 
-              style={styles.contentContainer}
-              disabled={isTopicLocked(topic, index)}
-              onPress={() => navigation.navigate('Study', { topic, lesson })}
-            >
-              <View style={styles.card}>
-                {isTopicLocked(topic, index) && (
-                  <View style={styles.lockOverlay}>
-                    <MaterialCommunityIcons name="lock" size={30} color="#fff" />
-                  </View>
-                )}
-                <View style={styles.imageContainer}>
-                  <Image source={lesson.animationPath} style={styles.image} />
-                </View>
-              </View>
+      <View style={styles.NowContainer}>
+        <TouchableOpacity
+          // key={lesson.id}
+          style={styles.contentContainer_}
+          // disabled={lesson.id > currentProgress.lessonId}
+        >
+          <View style={styles.card_}>
+            <View style={styles.imageContainer_}>
+              <Image style={styles.image_} />
+            </View>
+          </View>
 
-              <View style={styles.textContainer}>
-                <Text style={styles.title}>
-                  Step {index + 1}. {topic}
-                </Text>
+          <View style={styles.textContainer}>
+            <Text
+              style={styles.title}
+              numberOfLines={1} // 이 설정은 텍스트가 한 줄로 표시되도록 합니다.
+              ellipsizeMode="tail" // 텍스트가 길어지면 끝부분을 잘라서 '...'로 표시합니다.
+            >
+              Part
+            </Text>
+            <Text style={styles.sub}>자음, 모음, 숫자, 단위</Text>
+          </View>
+          <Feather
+            name="check-circle"
+            size={27}
+            color="black"
+            style={styles.check}
+          />
+        </TouchableOpacity>
+      </View>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        {lesson.topics.map((topic, index) => (
+          <TouchableOpacity
+            key={index}
+            style={styles.contentContainer}
+            disabled={isTopicLocked(topic, index)}
+            onPress={() => navigation.navigate("Study", { topic, lesson })}
+          >
+            <View style={styles.card}>
+              {isTopicLocked(topic, index) && (
+                <View style={styles.lockOverlay}>
+                  <MaterialCommunityIcons name="lock" size={30} color="#fff" />
+                </View>
+              )}
+              <View style={styles.imageContainer}>
+                <Image source={lesson.animationPath} style={styles.image} />
               </View>
-            </TouchableOpacity>
-          ))}
-        </View>
+            </View>
+
+            <View style={styles.textContainer}>
+              <Text style={styles.title}>
+                Step {index + 1}. {topic}
+              </Text>
+            </View>
+            <Feather
+              name="check-circle"
+              size={27}
+              color="green"
+              style={styles.check}
+            />
+          </TouchableOpacity>
+        ))}
       </ScrollView>
     </View>
   );
@@ -127,18 +185,18 @@ export default function LessonDetail() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFE694',
+    backgroundColor: "#FFE694",
   },
   backButton: {
-    flexDirection: 'row',
-    justifyContent: 'center',
+    flexDirection: "row",
+    justifyContent: "center",
   },
   Title: {
     fontSize: 20,
-    fontWeight: 'bold'
+    fontWeight: "bold",
   },
   categoryContainer: {
-    flexDirection: 'row',
+    flexDirection: "row",
     paddingHorizontal: 20,
     marginBottom: 10,
   },
@@ -148,14 +206,14 @@ const styles = StyleSheet.create({
   },
   categoryText: {
     fontSize: 17,
-    fontWeight: 'bold',
-    color: '#666',
+    fontWeight: "bold",
+    color: "#666",
   },
   selectedCategoryText: {
-    color: '#333',
+    color: "#333",
   },
   textWrapper: {
-    alignItems: 'center',
+    alignItems: "center",
   },
   indicator: {
     marginTop: 5,
@@ -165,66 +223,121 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     flexGrow: 1,
-    padding: 13,
-    marginTop: 15,
+
+    flexWrap: "wrap",
+    justifyContent: "space-around",
+    padding: 18,
   },
   rowContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap', 
-    justifyContent: 'space-around',
+    flexDirection: "row",
+    width: "100%",
+    padding: "5%",
+    // backgroundColor: "red",
+    marginBottom: 15,
+    borderRadius: 10,
   },
   contentContainer: {
-    flexDirection: 'column',
-    width: '42%',
-    marginBottom: 10,
+    flexDirection: "row",
+    width: "100%",
+    padding: "5%",
+    marginBottom: 15,
+    borderRadius: 10,
+    justifyContent: "space-between",
   },
   card: {
-    width: '100%',
-    minHeight: 'fit-content',
-    padding: 15,
-    marginBottom: 5,
+    minHeight: "fit-content",
+    padding: 13,
     borderRadius: 10,
-    backgroundColor: '#f9f9f9',
+    backgroundColor: "#f9f9f9",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+    elevation: 5,
   },
   lockOverlay: {
-    position: 'absolute',
+    position: "absolute",
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.4)',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "rgba(0, 0, 0, 0.4)",
+    justifyContent: "center",
+    alignItems: "center",
     borderRadius: 10,
     zIndex: 1,
   },
   imageContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   image: {
-    width: 115,
-    height: 115,
-    resizeMode: 'contain',
+    width: 60,
+    height: 60,
+    resizeMode: "contain",
   },
   textContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    flex: 1,
+    justifyContent: "center",
+    // alignItems: "center",
     marginLeft: 10,
-    marginBottom: 15,
-  },
-  title: {
-    fontSize: 13,
-    fontWeight: 'bold',
-    textAlign: 'center',
+    // marginBottom: 15,
   },
   titleTextWrapper: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
     marginBottom: 10,
   },
   titleText: {
     fontSize: 16,
+  },
+  NowContainer: {
+    paddingHorizontal: 18,
+  },
+
+  contentContainer_: {
+    flexDirection: "row",
+    backgroundColor: "white",
+    width: "100%",
+    padding: "5%",
+    borderRadius: 20,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+    elevation: 5,
+    justifyContent: "space-between",
+  },
+  card_: {
+    // width: 100,
+    minHeight: "fit-content",
+    padding: 13,
+    borderRadius: 10,
+    backgroundColor: "#f9f9f9",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+    elevation: 5,
+  },
+  image_: {
+    width: 60,
+    height: 60,
+    resizeMode: "contain",
+  },
+  check: {
+    alignSelf: "center",
+    marginRight: 15,
+  },
+  title: {
+    fontSize: 13,
+    fontWeight: "bold",
+    // textAlign: "center",
+    flexShrink: 1, // 텍스트가 넘치면 잘리도록 합니다.
+  },
+  sub: {
+    fontSize: 12,
+    marginTop: 3,
   },
 });
