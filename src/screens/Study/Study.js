@@ -44,8 +44,9 @@ export default function Study() {
       <Video
         source={require("../../../assets/videos/hi.mp4")}
         resizeMode="contain"
-        useNativeControls
+        // useNativeControls
         isLooping
+        shouldPlay
         style={styles.video}
       />
 

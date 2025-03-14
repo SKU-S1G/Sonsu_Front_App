@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   cameraFeedWrapper: {
-    alignSelf: 'center',
+    alignSelf: "center",
     width: "100%",
     height: 450,
     borderRadius: 12,
