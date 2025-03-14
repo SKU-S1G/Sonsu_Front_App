@@ -60,7 +60,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   textYellow: {
+    fontWeight: 500,
     fontSize: 32,
+    paddingVertical: 6,
   },
   sonsuModel: {
     width: "40%",
