@@ -8,7 +8,7 @@ import AIStroy from "./AIStroy";
 
 const BottomSheetComponent = () => {
   const bottomSheetRef = useRef(null);
-  const snapPoints = useMemo(() => ["45%", "90%"], []);
+  const snapPoints = useMemo(() => ["43%", "90%"], []);
 
   return (
     <BottomSheet
@@ -27,8 +27,6 @@ const BottomSheetComponent = () => {
           <ContinueLearning />
           {/* 복습하기 */}
           <Reviewing />
-          {/* AI가 알려주는 재미있는 수어 이야기 */}
-          <AIStroy />
         </ScrollView>
       </BottomSheetView>
     </BottomSheet>
