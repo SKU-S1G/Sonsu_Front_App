@@ -7,7 +7,6 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import Header from "../../components/Header";
@@ -31,6 +30,7 @@ export default function LessonDetail() {
   };
 
   const [selectedLevel, setSelectedLevel] = useState(initialSelectedLevel); // 파람으로 받은 selectedLevel을 초기값으로 설정
+  const currentProgress = progress[selectedLevel];
 
   // lesson.level이 있으면 selectedLevel을 해당 값으로 설정
   useEffect(() => {
@@ -172,7 +172,7 @@ export default function LessonDetail() {
             <Feather
               name="check-circle"
               size={27}
-              color="green"
+              color={isTopicLocked(topic, index) ? "gray" : levelColors[selectedLevel]}
               style={styles.check}
             />
           </TouchableOpacity>
@@ -223,18 +223,8 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     flexGrow: 1,
-
     flexWrap: "wrap",
-    justifyContent: "space-around",
     padding: 18,
-  },
-  rowContainer: {
-    flexDirection: "row",
-    width: "100%",
-    padding: "5%",
-    // backgroundColor: "red",
-    marginBottom: 15,
-    borderRadius: 10,
   },
   contentContainer: {
     flexDirection: "row",
@@ -249,11 +239,6 @@ const styles = StyleSheet.create({
     padding: 13,
     borderRadius: 10,
     backgroundColor: "#f9f9f9",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 5,
-    elevation: 5,
   },
   lockOverlay: {
     position: "absolute",
