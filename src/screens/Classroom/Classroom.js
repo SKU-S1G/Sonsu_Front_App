@@ -101,9 +101,19 @@ export default function Classroom() {
       {/* 여기야여기 */}
       <View style={styles.NowContainer}>
         <TouchableOpacity
-          // key={lesson.id}
-          style={styles.contentContainer_}
-          // disabled={lesson.id > currentProgress.lessonId}
+          style={[
+            styles.contentContainer_,
+            {
+              backgroundColor:
+                selectedLevel === "초급"
+                  ? "#C7DACD"
+                  : selectedLevel === "중급"
+                  ? "#CBD3DF"
+                  : selectedLevel === "고급"
+                  ? "#E9D0CC"
+                  : "#fff", // 기본값 (혹은 기본 색상을 원하면 변경)
+            },
+          ]}
         >
           <View style={styles.card_}>
             <View style={styles.imageContainer_}>
@@ -223,7 +233,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     justifyContent: "center",
     alignItems: "center",
-    marginLeft: 20, // 카테고리 버튼 사이에 여백을 추가
+    marginLeft: 20,
   },
   reviewButtonText: {
     color: "#fff",
@@ -243,13 +253,16 @@ const styles = StyleSheet.create({
     padding: "5%",
     marginBottom: 15,
     borderRadius: 10,
+    paddingBottom: 35,
+    borderBottomColor: "#757575",
+    borderBottomWidth: 0.3,
+    borderRadius: 20,
   },
   NowContainer: {
     paddingHorizontal: 18,
   },
   contentContainer_: {
     flexDirection: "row",
-    backgroundColor: "white",
     width: "100%",
     padding: "5%",
     borderRadius: 20,
@@ -266,11 +279,6 @@ const styles = StyleSheet.create({
     padding: 13,
     borderRadius: 10,
     backgroundColor: "#f9f9f9",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 5,
-    elevation: 5,
   },
   card_: {
     // width: 100,

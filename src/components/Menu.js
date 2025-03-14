@@ -12,6 +12,7 @@ const Menu = () => {
   return (
     <>
       <Tab.Navigator
+        initialRouteName="Home"
         screenOptions={{
           tabBarStyle: styles.tabBar, // 스타일 적용
           tabBarItemStyle: styles.tabItem, // 개별 아이템 스타일 적용
