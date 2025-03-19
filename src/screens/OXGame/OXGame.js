@@ -8,7 +8,7 @@ import Header from "../../components/Header";
 import SpeedBack from "../../components/SpeedBack";
 import { useNavigation } from "@react-navigation/native";
 
-export default function OXInfo() {
+export default function OXGame() {
   const [fontsLoaded] = useFonts(customFonts);
   const navigation = useNavigation();
 
@@ -22,9 +22,7 @@ export default function OXInfo() {
 
   return (
     <View>
-      <Header color="#FFFFFF" />
       <SpeedBack heightMultiplier={1.8} />
-
       <View>
         <View style={styles.speedTextContainer}>
           <MaskedView
@@ -45,23 +43,27 @@ export default function OXInfo() {
         </View>
 
         <View style={styles.info}>
-          <View style={styles.infoText}>
-            <Text style={{ fontSize: 16 }}>캐릭터의 수어를 보고</Text>
-            <Text style={{ fontSize: 16 }}>정답을 맞춰보세요!!</Text>
+          <View>
+            <Text style={{ fontSize: 32 }}>❤️❤️❤️❤️❤️</Text>
           </View>
 
           <Image
             source={require("../../../assets/images/sonsuModel.png")}
             style={styles.image}
           />
+          <Text style={{ marginTop: 30, fontSize: 30, fontWeight: 800 }}>
+            안녕하세요
+          </Text>
         </View>
 
-        <TouchableOpacity
-          style={styles.practiceButton}
-          onPress={() => navigation.navigate("OXGame")}
-        >
-          <Text style={styles.practiceButtonText}>시작하기</Text>
-        </TouchableOpacity>
+        <View style={styles.btnwrap}>
+          <TouchableOpacity style={styles.btn}>
+            <Text style={styles.practiceButtonText}>⭕️</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.btn}>
+            <Text style={styles.practiceButtonText}>❌</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
@@ -69,7 +71,7 @@ export default function OXInfo() {
 
 const styles = StyleSheet.create({
   speedTextContainer: {
-    marginTop: 10,
+    marginTop: 110,
     marginLeft: 10,
   },
   maskedView: {
@@ -88,16 +90,13 @@ const styles = StyleSheet.create({
   info: {
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 50,
+    marginTop: 30,
   },
   image: {
     width: "50%",
     height: 240,
     resizeMode: "contain",
-    marginTop: 50,
-  },
-  infoText: {
-    marginBottom: 20,
+    marginTop: 20,
   },
   importantView: {
     backgroundColor: "#FFFFFF",
@@ -144,10 +143,25 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     elevation: 3,
   },
+  btnwrap: {
+    flexDirection: "row",
+    alignSelf: "center",
+    marginTop: 20,
+  },
+  btn: {
+    backgroundColor: "white",
+    paddingVertical: 40,
+    paddingHorizontal: 30,
+    borderRadius: 20,
+    margin: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 1, height: 3 },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    elevation: 3,
+  },
   practiceButtonText: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "#333",
+    fontSize: 70,
     textAlign: "center",
   },
 });
