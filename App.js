@@ -19,6 +19,7 @@ import StudyOnly from "./src/screens/Study/StudyOnly";
 import SpeedInfo from "./src/screens/Speed/SpeedInfo";
 import SpeedGame from "./src/screens/Speed/SpeedGame";
 import OXInfo from "./src/screens/OXGame/OXInfo";
+import OXGame from "./src/screens/OXGame/OXGame";
 
 const Stack = createStackNavigator();
 
@@ -27,9 +28,9 @@ export default function App() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Classroom" component={Classroom} />
           <Stack.Screen name="Main" component={Menu} />
           <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="Classroom" component={Classroom} />
           <Stack.Screen name="AppPermissions" component={AppPermissions} />
           <Stack.Screen name="SignUp" component={SignUp} />
           <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
@@ -44,6 +45,7 @@ export default function App() {
           <Stack.Screen name="SpeedInfo" component={SpeedInfo} />
           <Stack.Screen name="SpeedGame" component={SpeedGame} />
           <Stack.Screen name="OXInfo" component={OXInfo} />
+          <Stack.Screen name="OXGame" component={OXGame} />
         </Stack.Navigator>
       </NavigationContainer>
     </GestureHandlerRootView>
