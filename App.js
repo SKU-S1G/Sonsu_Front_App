@@ -34,7 +34,7 @@ export default function App() {
           <Stack.Screen name="AppPermissions" component={AppPermissions} />
           <Stack.Screen name="SignUp" component={SignUp} />
           <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
-          {/* <Stack.Screen name="Classroom" component={Classroom} /> */}
+          <Stack.Screen name="Classroom" component={Classroom} />
           <Stack.Screen name="LessonDetail" component={LessonDetail} />
           <Stack.Screen name="Study" component={Study} />
           <Stack.Screen name="Review" component={Review} />
