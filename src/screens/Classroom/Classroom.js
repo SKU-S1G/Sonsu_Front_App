@@ -155,7 +155,18 @@ export default function Classroom() {
             }
             disabled={lesson.id > currentProgress.lessonId}
           >
-            <View style={styles.card}>
+            <View
+              style={[
+                styles.card,
+                {
+                  shadowColor: levelColors[selectedLevel], // selectedLevel에 맞는 색상을 가져옵니다.
+                  shadowOffset: { width: 0, height: 2 },
+                  shadowOpacity: 0.2,
+                  shadowRadius: 5,
+                  elevation: 5, // 안드로이드에서 그림자 효과를 보려면 elevation을 추가해야 합니다.
+                },
+              ]}
+            >
               {lesson.id > currentProgress.lessonId && (
                 <View style={styles.lockOverlay}>
                   <MaterialCommunityIcons name="lock" size={30} color="#fff" />
@@ -279,6 +290,10 @@ const styles = StyleSheet.create({
     padding: 13,
     borderRadius: 10,
     backgroundColor: "#f9f9f9",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+    elevation: 5,
   },
   card_: {
     // width: 100,
