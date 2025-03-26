@@ -17,6 +17,9 @@ import WeeklyRanking from "./WeeklyRanking";
 import ReviewComponent from "../../components/ReviewComponent";
 import tailwind from "tailwind-rn";
 import AntDesign from "@expo/vector-icons/AntDesign";
+import axios from "axios";
+import { API_URL } from "../../../config";
+import { navigate } from "expo-router/build/global-state/routing";
 
 const MyPage = () => {
   const navigation = useNavigation();
@@ -24,7 +27,22 @@ const MyPage = () => {
   const handleLogout = () => {
     Alert.alert("로그아웃", "정말 로그아웃 하시겠습니까?", [
       { text: "취소", style: "cancel" },
-      { text: "확인", onPress: () => console.log("로그아웃 처리(해야댐)") },
+      {
+        text: "확인",
+        onPress: async () => {
+          try {
+            const response = await axios.post(`${API_URL}/logout`, {
+              withCredentials: true,
+            });
+            if (response.status === 200) {
+              console.log("로그아웃 성공:", response.data);
+              navigation.navigate("Login");
+            }
+          } catch (error) {
+            console.log(error.message);
+          }
+        },
+      },
     ]);
   };
 
@@ -153,7 +171,7 @@ const styles = StyleSheet.create({
     height: 100, // height 추가
     resizeMode: "contain",
     backgroundColor: "white",
-    borderRadius: "50%",
+    borderRadius: 50,
   },
   ProfileEdit: {
     width: 11,

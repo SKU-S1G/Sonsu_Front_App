@@ -12,16 +12,13 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import Header from "../../components/Header";
 import Feather from "@expo/vector-icons/Feather";
 import StudyBack from "../../components/StudyBack";
+import axios from "axios";
+import { API_URL } from "../../../config";
 
 export default function LessonDetail() {
   const navigation = useNavigation();
   const route = useRoute();
-  const {
-    lesson,
-    title,
-    progress,
-    selectedLevel: initialSelectedLevel,
-  } = route.params;
+  const { lesson, selectedLevel: initialSelectedLevel } = route.params;
 
   const levelColors = {
     초급: "#39B360",
@@ -30,7 +27,23 @@ export default function LessonDetail() {
   };
 
   const [selectedLevel, setSelectedLevel] = useState(initialSelectedLevel); // 파람으로 받은 selectedLevel을 초기값으로 설정
-  const currentProgress = progress[selectedLevel];
+  const [topics, setTopics] = useState([]);
+  const [progress, setProgress] = useState([]);
+
+  useEffect(() => {
+    const fetchTopic = async () => {
+      try {
+        const response = await axios.get(
+          `${API_URL}/lessons/${lesson.id}/topics`
+        );
+        // console.log("받은 주제 데이터:", response.data);
+        setTopics(response.data);
+      } catch (error) {
+        console.log("불러오기 실패:", error.message);
+      }
+    };
+    fetchTopic();
+  }, [lesson.id]);
 
   // lesson.level이 있으면 selectedLevel을 해당 값으로 설정
   useEffect(() => {
@@ -39,16 +52,22 @@ export default function LessonDetail() {
     }
   }, [lesson.level, selectedLevel]); // lesson.level이 변경될 때마다 실행
 
-  const isTopicLocked = (topic, index) => {
-    if (lesson.id < progress.lessonId) {
-      return false;
-    } else if (lesson.id === progress.lessonId) {
-      const lastCompletedTopicIndex = lesson.topics.findIndex(
-        (t) => t === progress.lastCompletedTopic
-      );
-      return index > lastCompletedTopicIndex;
+  const isTopicLocked = (categoryId, index) => {
+    const categoryLessons = topics.filter(
+      (topic) => topic.lessonCategory_id === categoryId
+    );
+
+    if (categoryLessons.length === 0) {
+      return true;
     }
-    return true;
+
+    const count = progress.filter((p) =>
+      categoryLessons.some(
+        (lesson) => lesson.lesson_id === p.lesson_id && p.status === "completed"
+      )
+    ).length;
+
+    return index >= count;
   };
 
   const renderCategoryButtons = () => (
@@ -88,6 +107,29 @@ export default function LessonDetail() {
     </View>
   );
 
+  useEffect(() => {
+    const fetchUserProgress = async () => {
+      try {
+        const response = await axios.post(
+          `${API_URL}/lessons/progress/topics`,
+          {
+            withCredentials: true,
+          }
+        );
+        if (response.status === 200) {
+          // console.log("학습 진행 데이터:", response.data);
+          setProgress(response.data);
+        }
+      } catch (error) {
+        console.error(
+          "학습 진행 데이터를 불러오는 데 실패했습니다:",
+          error.message
+        );
+      }
+    };
+
+    fetchUserProgress();
+  }, []);
   return (
     <View style={styles.container}>
       <StudyBack />
@@ -106,15 +148,15 @@ export default function LessonDetail() {
           <Text
             style={[styles.titleText, { color: "#39B360", fontWeight: "bold" }]}
           >
-            {lesson.id <= progress.lessonId
-              ? lesson.topics.filter((_, index) => !isTopicLocked(_, index))
-                  .length
-              : 0}
+            {
+              topics.filter(
+                (topic, index) => !isTopicLocked(topic.lessonCategory_id, index)
+              ).length
+            }
           </Text>{" "}
-          / {lesson.topics.length} 강의
+          / {topics.length} 강의
         </Text>
       </View>
-
       <View style={styles.NowContainer}>
         <TouchableOpacity
           style={[
@@ -124,10 +166,10 @@ export default function LessonDetail() {
                 selectedLevel === "초급"
                   ? "#C7DACD"
                   : selectedLevel === "중급"
-                  ? "#CBD3DF"
-                  : selectedLevel === "고급"
-                  ? "#E9D0CC"
-                  : "#fff", // 기본값 (혹은 기본 색상을 원하면 변경)
+                    ? "#CBD3DF"
+                    : selectedLevel === "고급"
+                      ? "#E9D0CC"
+                      : "#fff", // 기본값 (혹은 기본 색상을 원하면 변경)
             },
           ]}
         >
@@ -156,15 +198,17 @@ export default function LessonDetail() {
         </TouchableOpacity>
       </View>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-        {lesson.topics.map((topic, index) => (
+        {topics.map((topic, index) => (
           <TouchableOpacity
             key={index}
             style={styles.contentContainer}
-            disabled={isTopicLocked(topic, index)}
+            disabled={
+              index !== 0 && isTopicLocked(topic.lessonCategory_id, index)
+            }
             onPress={() => navigation.navigate("Study", { topic, lesson })}
           >
             <View style={styles.card}>
-              {isTopicLocked(topic, index) && (
+              {index !== 0 && isTopicLocked(topic.lessonCategory_id, index) && (
                 <View style={styles.lockOverlay}>
                   <MaterialCommunityIcons name="lock" size={30} color="#fff" />
                 </View>
@@ -176,13 +220,17 @@ export default function LessonDetail() {
 
             <View style={styles.textContainer}>
               <Text style={styles.title}>
-                Step {index + 1}. {topic}
+                Step {index + 1}. {topic.word}
               </Text>
             </View>
             <Feather
               name="check-circle"
               size={27}
-              color={isTopicLocked(topic, index) ? "gray" : levelColors[selectedLevel]}
+              color={
+                isTopicLocked(topic.lessonCategory_id, index)
+                  ? "gray"
+                  : levelColors[selectedLevel]
+              }
               style={styles.check}
             />
           </TouchableOpacity>
