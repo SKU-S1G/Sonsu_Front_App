@@ -16,7 +16,7 @@ import axios from "axios";
 
 export default function Study() {
   const route = useRoute();
-  const { topic, lesson } = route.params;
+  const { topic, lesson, index } = route.params;
   const navigation = useNavigation();
   const [animation, setAnimation] = useState(null);
 
@@ -68,7 +68,7 @@ export default function Study() {
   useEffect(() => {
     fetchTopic();
     startLesson();
-    // console.log("Current Topic:", topic);
+    // console.log("강의 정보:", lesson);
   }, [topic]);
 
   return (
@@ -80,9 +80,7 @@ export default function Study() {
         onPress={() => navigation.goBack()}
       >
         <View style={styles.screenContainer}>
-          <Text
-            style={styles.title}
-          >{`Step ${topic.lesson_id}. ${topic.word}`}</Text>
+          <Text style={styles.title}>{`Step ${index + 1}. ${topic.word}`}</Text>
           {/* topic 객체라 topic => topic.word 수정 */}
         </View>
       </TouchableOpacity>
@@ -129,7 +127,9 @@ export default function Study() {
       {/* 혼자 해보기 버튼 */}
       <TouchableOpacity
         style={styles.practiceButton}
-        onPress={() => navigation.navigate("StudyOnly", { topic, lesson })}
+        onPress={() =>
+          navigation.navigate("StudyOnly", { topic, lesson, index })
+        }
       >
         <Text style={styles.practiceButtonText}>혼자 해보기 →</Text>
       </TouchableOpacity>

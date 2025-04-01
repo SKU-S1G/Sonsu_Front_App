@@ -9,7 +9,7 @@ import axios from "axios";
 
 export default function StudyOnly() {
   const route = useRoute();
-  const { topic, lesson } = route.params;
+  const { topic, lesson, index } = route.params;
   const navigation = useNavigation();
 
   // const serverIP = "http://192.168.45.144:5001";
@@ -47,7 +47,7 @@ export default function StudyOnly() {
           <View style={styles.screenContainer}>
             <Text
               style={styles.title}
-            >{`Step ${lesson.id}. ${topic.word}`}</Text>
+            >{`Step ${index + 1}. ${topic.word}`}</Text>
           </View>
         </View>
       </TouchableOpacity>
