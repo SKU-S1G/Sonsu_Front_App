@@ -42,7 +42,6 @@ export default function Classroom() {
           console.error("완료된 카테고리 불러오기 실패:", error);
         }
       };
-
       fetchCompletedCategories();
     });
 

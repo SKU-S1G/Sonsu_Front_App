@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   StyleSheet,
   View,
@@ -14,6 +14,7 @@ import Feather from "@expo/vector-icons/Feather";
 import StudyBack from "../../components/StudyBack";
 import axios from "axios";
 import { API_URL } from "../../../config";
+import { io } from "socket.io-client";
 
 export default function LessonDetail() {
   const navigation = useNavigation();
@@ -31,6 +32,51 @@ export default function LessonDetail() {
   const [progress, setProgress] = useState([]);
 
   useEffect(() => {
+    const socketInstance = io(`${API_URL}`, {
+      path: "/ws",
+      transports: ["websocket"],
+      withCredentials: true,
+    });
+
+    socketInstance.on("connect", () => {
+      const fetchUserProgress = async () => {
+        try {
+          const response = await axios.post(
+            `${API_URL}/lessons/progress/topics`,
+            {
+              withCredentials: true,
+            }
+          );
+          if (response.status === 200) {
+            // console.log("학습 진행 데이터:", response.data);
+            setProgress(response.data);
+          }
+        } catch (error) {
+          console.error(
+            "학습 진행 데이터를 불러오는 데 실패했습니다:",
+            error.message
+          );
+        }
+      };
+
+      fetchUserProgress();
+    });
+
+    socketInstance.on("progressUpdated", (data) => {
+      if (data) {
+        setProgress(data);
+        // console.log("Socket Progress:", data);
+      } else {
+        console.error("수신된 데이터가 없습니다");
+      }
+    });
+
+    return () => {
+      socketInstance.disconnect();
+    };
+  }, []);
+
+  useEffect(() => {
     const fetchTopic = async () => {
       try {
         const response = await axios.get(
@@ -45,30 +91,38 @@ export default function LessonDetail() {
     fetchTopic();
   }, [lesson.id]);
 
-  // lesson.level이 있으면 selectedLevel을 해당 값으로 설정
-  useEffect(() => {
-    if (lesson.level && lesson.level !== selectedLevel) {
-      setSelectedLevel(lesson.level);
-    }
-  }, [lesson.level, selectedLevel]); // lesson.level이 변경될 때마다 실행
+  const isTopicLocked = useCallback(
+    (categoryId, index) => {
+      const categoryLessons = topics.filter(
+        (topic) => topic.lessonCategory_id === categoryId
+      );
 
-  const isTopicLocked = (categoryId, index) => {
-    const categoryLessons = topics.filter(
-      (topic) => topic.lessonCategory_id === categoryId
-    );
+      if (categoryLessons.length === 0) return true;
 
-    if (categoryLessons.length === 0) {
-      return true;
-    }
+      let completedLessons = progress.filter((p) =>
+        categoryLessons.some(
+          (lesson) =>
+            lesson.lesson_id === p.lesson_id && p.status === "completed"
+        )
+      );
 
-    const count = progress.filter((p) =>
-      categoryLessons.some(
-        (lesson) => lesson.lesson_id === p.lesson_id && p.status === "completed"
-      )
-    ).length;
+      let count = completedLessons.length;
 
-    return index >= count;
-  };
+      if (
+        categoryLessons[0] &&
+        !progress.some(
+          (p) =>
+            p.lesson_id === categoryLessons[0].lesson_id &&
+            p.status === "completed"
+        )
+      ) {
+        count = 0;
+      }
+
+      return index > count;
+    },
+    [topics, progress]
+  );
 
   const renderCategoryButtons = () => (
     <View style={styles.categoryContainer}>
@@ -107,29 +161,6 @@ export default function LessonDetail() {
     </View>
   );
 
-  useEffect(() => {
-    const fetchUserProgress = async () => {
-      try {
-        const response = await axios.post(
-          `${API_URL}/lessons/progress/topics`,
-          {
-            withCredentials: true,
-          }
-        );
-        if (response.status === 200) {
-          // console.log("학습 진행 데이터:", response.data);
-          setProgress(response.data);
-        }
-      } catch (error) {
-        console.error(
-          "학습 진행 데이터를 불러오는 데 실패했습니다:",
-          error.message
-        );
-      }
-    };
-
-    fetchUserProgress();
-  }, []);
   return (
     <View style={styles.container}>
       <StudyBack />
@@ -149,8 +180,11 @@ export default function LessonDetail() {
             style={[styles.titleText, { color: "#39B360", fontWeight: "bold" }]}
           >
             {
-              topics.filter(
-                (topic, index) => !isTopicLocked(topic.lessonCategory_id, index)
+              topics.filter((topic) =>
+                progress.some(
+                  (p) =>
+                    p.lesson_id === topic.lesson_id && p.status === "completed"
+                )
               ).length
             }
           </Text>{" "}
@@ -205,7 +239,9 @@ export default function LessonDetail() {
             disabled={
               index !== 0 && isTopicLocked(topic.lessonCategory_id, index)
             }
-            onPress={() => navigation.navigate("Study", { topic, lesson })}
+            onPress={() =>
+              navigation.navigate("Study", { topic, lesson, index })
+            }
           >
             <View style={styles.card}>
               {index !== 0 && isTopicLocked(topic.lessonCategory_id, index) && (
@@ -227,7 +263,11 @@ export default function LessonDetail() {
               name="check-circle"
               size={27}
               color={
-                isTopicLocked(topic.lessonCategory_id, index)
+                isTopicLocked(topic.lessonCategory_id, index) ||
+                !progress.some(
+                  (p) =>
+                    p.lesson_id === topic.lesson_id && p.status === "completed"
+                )
                   ? "gray"
                   : levelColors[selectedLevel]
               }
